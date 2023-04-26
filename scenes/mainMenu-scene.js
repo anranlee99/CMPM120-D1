@@ -49,7 +49,7 @@ export class MainMenuScene extends SlideScene {
         let b = Math.round(this.lerp(color1.b, color2.b, t)); // interpolate between the blue components of the two colors
         this.complement(r, g, b);
         this.currColor = { r, g, b }
-        this.cameras.main.setBackgroundColor({ r, g, b, a:150}); // set the background color of the main camera
+        this.cameras.main.setBackgroundColor({ r, g, b, a: 150 }); // set the background color of the main camera
         if (Math.floor(tt) - Math.floor(this.ttPrev) > 0) {
             this.colorIndex++;
             this.colors.push(this.getRandomColor());
@@ -59,20 +59,49 @@ export class MainMenuScene extends SlideScene {
     preload() {
         this.load.path = './assets/';
     }
-    create() {
-        super.create()
-        this.winX = this.game.config.width;
-        this.winY = this.game.config.height;
-        // this.title = this.add.text(this.winX / 2, this.winY * 0.3, "IT'S A DOGGY DOG WORLD OUT THERE",
-        //     {
-        //         fontFamily: 'Instrument Serif',
-        //         fontSize: 48,
-        //         color: '#000000',
-        //         // align: 'center',
+    addInteractiveText(x, y, text) {
+        let btn = this.add.text(x, y, text,
+            {
+                fontFamily: 'Instrument Serif',
+                fontSize: this.winX * 0.04,
+                color: '#000000',
+                align: 'center',
+                wordWrap: {
+                    width: this.winX * .8,
+                    //    useAdvancedWrap: true
+                },
 
+            }).setOrigin(0.5, 0.5).setInteractive();
 
-        //     }).setStroke('#000000', 1).setOrigin(0.5, 0.5);
-        // this.title.setShadow(3, 1, '#bbbbbb', 2, true, true);
+        //TODO: add sound on hover 
+        btn.on('pointerover', () => {
+            btn.setFontSize(this.winX * 0.045)
+        }).on('pointerout', () => {
+            btn.setFontSize(this.winX * 0.04)
+        })
+    }
+    makeRain() {
+        this.time.addEvent({
+            delay: 100, loop: true, callback: () => {
+                let obj = this.componentToHex(this.currColor.r) + this.componentToHex(this.currColor.g) + this.componentToHex(this.currColor.b);
+                let drop = this.add.circle(this.winX * 0.9 * Math.random() + this.winX * 0.1, this.winY * 0.9 * Math.random() + this.winY * 0.1).setStrokeStyle(5, this.comp, 0.3).setFillStyle(this.comp, 0)
+                this.tweens.add({
+                    targets: drop,
+                    radius: { from: 0, to: 200 },
+                    // alpha: {from: 0.3, to: 0},
+                    duration: 6000,
+                    onComplete: () => { drop.destroy() }
+                });
+                this.tweens.add({
+                    targets: drop,
+                    // radius: {from: 0, to: 200},
+                    alpha: { from: 0.3, to: 0 },
+                    duration: 5000,
+                });
+            }
+        });
+    }
+    makeTitle(){
         let titleStr = "IT'S A DOGGY DOG WORLD OUT THERE".split('')
         this.titleArr = []
         let titleWidth = 0
@@ -99,20 +128,19 @@ export class MainMenuScene extends SlideScene {
             let charlen = this.titleArr[this.titleArr.length - 1].displayWidth  //.width is the same thing
             titleWidth += charlen
         })
-        let lOffset = (this.winX - titleWidth) /2
+        let lOffset = (this.winX - titleWidth) / 2
         let charPos = 0;
         //this.add.line((this.winX-titleWidth)/2, this.winY*0.3, 0, 0, titleWidth, 0, 0, 1)
         this.titleArr.forEach((char) => {
-            //left offset should be 
-            
-            // char.setStroke('#000000', 1).setOrigin(0.5, 0.5).setShadow(3, 0, '#111111', 2, true, true)
+
+            //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
             char.setX(lOffset + charPos) // div by 2 does something 
             charPos += char.displayWidth
             char.setText(char.text + " ")
 
         })
 
-
+        //doesn't need to be a chain but i might add more to the chain
         this.tweens.chain({
             targets: [...this.titleArr],
             tweens: [
@@ -124,52 +152,25 @@ export class MainMenuScene extends SlideScene {
             ]
 
         })
-        this.playBtn = this.add.text(this.winX / 2, this.winY / 2, "PLAY",
-            {
-                fontFamily: 'Instrument Serif',
-                fontSize: this.winX * 0.04,
-                color: '#000000',
-                align: 'center',
-                wordWrap: {
-                    width: this.winX * .8,
-                    //    useAdvancedWrap: true 
-                },
+    }
+    create() {
+        super.create()
+        this.winX = this.game.config.width;
+        this.winY = this.game.config.height;
 
-            }).setOrigin(0.5, 0.5).setInteractive();
-
-        this.playBtn.on('pointerover', () => {
-            this.playBtn.setFontSize(this.winX * 0.045)
-        }).on('pointerout', () => {
-            this.playBtn.setFontSize(this.winX * 0.04)
-        })
+        this.makeTitle()
+        this.addInteractiveText(this.winX / 2, this.winY / 2, "PLAY")
+        this.addInteractiveText(this.winX / 2, this.winY * 0.6, "SETTINGS")
+        this.addInteractiveText(this.winX / 2, this.winY * 0.7, "CREDITS")
         this.graphics = this.add.graphics();
 
-        
-        this.time.addEvent({
-            delay: 100, loop: true, callback: () => {
-                let obj = this.componentToHex(this.currColor.r) + this.componentToHex(this.currColor.g) + this.componentToHex(this.currColor.b);
-                let drop = this.add.circle(this.winX * 0.9 * Math.random() + this.winX * 0.1, this.winY * 0.9 * Math.random() + this.winY * 0.1).setStrokeStyle(5, this.comp, 0.3).setFillStyle(this.comp, 0)
-                this.tweens.add({
-                    targets: drop,
-                    radius: { from: 0, to: 200 },
-                    // alpha: {from: 0.3, to: 0},
-                    duration: 6000,
-                    onComplete: () => { drop.destroy() }
-                });
-                this.tweens.add({
-                    targets: drop,
-                    // radius: {from: 0, to: 200},
-                    alpha: { from: 0.3, to: 0 },
-                    duration: 5000,
-                });
-            }
-        });
+        this.makeRain()
+
 
     }
 
     update() {
         this.discriminateDog();
-
 
     }
 
