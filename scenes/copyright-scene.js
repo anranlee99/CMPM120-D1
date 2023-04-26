@@ -28,11 +28,11 @@ export class CopyrightScene extends SlideScene {
         
         All trademarks, service marks, and trade names used in the Game or Materials are the property of their respective owners.
         
-        For any questions regarding this Notice, please contact MaruHoldings LLC at [insert contact information here].`
+        For any questions regarding this Notice, please contact MaruHoldings LLC.`
         this.subs = this.add.text(winX / 2, winY / 2, subtitle_str,
             {
                 fontFamily: 'Instrument Serif',
-                fontSize: 12,
+                fontSize: this.winX * 0.3,
                 color: '#ffffff',
                 align: 'center',
                 wordWrap: {

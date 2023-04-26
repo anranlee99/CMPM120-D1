@@ -20,7 +20,7 @@ export class AssocScene extends SlideScene {
         this.subs = this.add.text(winX / 2, winY/2, subtitle_str,
             {
                 fontFamily: 'Instrument Serif',
-                fontSize: 24, 
+                fontSize: this.winX * 0.3, 
                 color: '#ffffff', 
                 align: 'center', 
                 wordWrap: { 
