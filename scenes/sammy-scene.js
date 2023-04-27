@@ -21,6 +21,7 @@ export class SammyScene extends SlideScene {
         this.sammy = this.add.image(winX / 3, winY * .4, 'sammy_portrait').setScale(0.5);
         this.adam = this.add.image(winX *2/ 3, winY * .4, 'adam_smith').setScale(0.5);
         this.sammy.setAlpha(0);
+        this.adam.setAlpha(0);
         
         const subtitle_str = "Sammy The Slug"
         const sub2 = "Adam Smith"
