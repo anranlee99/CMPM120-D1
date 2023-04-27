@@ -31,5 +31,6 @@ Adam Smith photo taken from Wikipedia.
 
 UCSC logo taken from school website. 
 
+Logotypes made using Adobe Express.
 ## Demo
 <a href="https://anranlee99.github.io/CMPM120-D1/"> here </a>
