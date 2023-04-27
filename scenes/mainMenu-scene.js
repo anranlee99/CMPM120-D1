@@ -9,7 +9,6 @@ export class MainMenuScene extends SlideScene {
             this.getRandomColor(),
             this.getRandomColor(),
         ];
-        //this.comp = this.complement(this.colors[0].r, this.colors[0].g, this.colors[0].b);
         this.colorIndex = 0; // index of the current color in the colors array
 
     }
@@ -128,26 +127,12 @@ export class MainMenuScene extends SlideScene {
             let charlen = this.titleArr[this.titleArr.length - 1].displayWidth  //.width is the same thing
             titleWidth += charlen
         })
+        //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
         let lOffset = (this.winX - titleWidth) / 2
         let charPos = 0;
-        //this.add.line((this.winX-titleWidth)/2, this.winY*0.3, 0, 0, titleWidth, 0, 0, 1)
         this.titleArr.forEach((char) => {
-            
-            //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
             char.setX(lOffset + charPos) // div by 2 does something 
-            // char.style.shadow.shadowOffsetX = 1
-            // char.style.shadow.shadowOffsetY = 1
-            /*
-            "shadowOffsetX": 0,
-            "shadowOffsetY": 0,
-            "shadowColor": "#000",
-            "shadowBlur": 0,
-            "shadowStroke": false,
-            "shadowFill": false,
-            */
             charPos += char.displayWidth
-            // char.setText(char.text + " ")
-
         })
 
         //doesn't need to be a chain but i might add more to the chain

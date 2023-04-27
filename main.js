@@ -24,5 +24,5 @@ let game = new Phaser.Game(config);
 
 //so this will be under the canvas, since it'll run after the game is created
 let info = document.createElement('p')
-info.innerHTML = "Click to skip forward."
+info.innerHTML = "Click to skip forward.\nP - Skip to main menu.\nR - Restart."
 document.body.appendChild(info)
