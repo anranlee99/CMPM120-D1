@@ -103,7 +103,7 @@ export class MainMenuScene extends SlideScene {
             }
         });
     }
-    makeTitle(){
+    makeTitle() {
         let titleStr = "IT'S A DOGGY DOG WORLD OUT THERE".split('')
         this.titleArr = []
         let titleWidth = 0
@@ -113,7 +113,6 @@ export class MainMenuScene extends SlideScene {
             Object.values(this.getRandomColor()).forEach(e => {
                 c += this.componentToHex(e)
             })
-            console.log(this.winX * 0.01)
             //add this to text obj containing just one letter into a container
             //of all the letters of the title
             this.titleArr.push(
@@ -122,7 +121,7 @@ export class MainMenuScene extends SlideScene {
                         fontFamily: 'Instrument Serif',
                         fontSize: this.winX * 0.05,
                         color: c,
-                    })
+                    }).setStroke(0,5).setShadow(1,1, 0, 0, true)
             )
 
             //increment the length 
@@ -133,12 +132,22 @@ export class MainMenuScene extends SlideScene {
         let charPos = 0;
         //this.add.line((this.winX-titleWidth)/2, this.winY*0.3, 0, 0, titleWidth, 0, 0, 1)
         this.titleArr.forEach((char) => {
-
-            char.setShadow(1,1,1,1, true, true) 
+            
             //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
             char.setX(lOffset + charPos) // div by 2 does something 
+            // char.style.shadow.shadowOffsetX = 1
+            // char.style.shadow.shadowOffsetY = 1
+            /*
+            "shadowOffsetX": 0,
+            "shadowOffsetY": 0,
+            "shadowColor": "#000",
+            "shadowBlur": 0,
+            "shadowStroke": false,
+            "shadowFill": false,
+            */
             charPos += char.displayWidth
-            char.setText(char.text + " ")
+            console.log(char.style)
+            // char.setText(char.text + " ")
 
         })
 
