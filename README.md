@@ -27,6 +27,8 @@ Hover sound effect asset made by me flicking a soda can tab and then editing the
 
 Dog audio may or may not have been lowered (Don't tell Riki).
 
+Adam Smith photo taken from Wikipedia. 
+
 UCSC logo taken from school website. 
 
 ## Demo
