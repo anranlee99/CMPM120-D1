@@ -19,8 +19,15 @@ This is a demo for my Computation Media - Game Development Experience course @ U
 
 All dog related assets stolen from my dogs Riki and Betty then mutilated by yours truly. 
 
+<img src="./assets/betty.jpeg">
+<img src="./assets/riki.jpeg">
+
+
+Hover sound effect asset made by me flicking a soda can tab and then editing the audio.
+
+Dog audio may or may not have been lowered (Don't tell Riki).
+
 UCSC logo taken from school website. 
 
-
-#### Demo
+## Demo
 <a href="https://anranlee99.github.io/CMPM120-D1/"> here </a>

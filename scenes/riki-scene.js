@@ -7,13 +7,14 @@ export class RikiScene extends SlideScene {
     preload() {
         this.load.path = './assets/';
         this.load.image('riki_portrait', 'riki_portrait.png');
-
+        this.load.audio('riki_growl', 'dog_audio.mp3')
     }
     startNext(){
         this.scene.start('main_menu')
     }
     create() {
         super.create()
+        this.sound.add('riki_growl').play()
         const winX = this.game.config.width;
         const winY = this.game.config.height;
         //set the logo in the center 

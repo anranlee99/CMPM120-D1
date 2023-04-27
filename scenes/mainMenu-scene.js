@@ -58,6 +58,7 @@ export class MainMenuScene extends SlideScene {
     }
     preload() {
         this.load.path = './assets/';
+        this.load.audio('hoverSE', 'hover_sound.mp3')
     }
     addInteractiveText(x, y, text) {
         let btn = this.add.text(x, y, text,
@@ -72,15 +73,18 @@ export class MainMenuScene extends SlideScene {
                 },
 
             }).setOrigin(0.5, 0.5).setInteractive();
-
+        btn.setShadow(1, 1, 0, 0, true, true)
         //TODO: add sound on hover 
         btn.on('pointerover', () => {
             btn.setFontSize(this.winX * 0.045)
+            this.hoverSE.play()
         }).on('pointerout', () => {
             btn.setFontSize(this.winX * 0.04)
+            this.hoverSE.play()
         })
     }
     makeRain() {
+        this.hoverSE = this.sound.add('hoverSE')
         this.time.addEvent({
             delay: 100, loop: true, callback: () => {
                 let obj = this.componentToHex(this.currColor.r) + this.componentToHex(this.currColor.g) + this.componentToHex(this.currColor.b);
@@ -88,13 +92,11 @@ export class MainMenuScene extends SlideScene {
                 this.tweens.add({
                     targets: drop,
                     radius: { from: 0, to: 200 },
-                    // alpha: {from: 0.3, to: 0},
                     duration: 6000,
                     onComplete: () => { drop.destroy() }
                 });
                 this.tweens.add({
                     targets: drop,
-                    // radius: {from: 0, to: 200},
                     alpha: { from: 0.3, to: 0 },
                     duration: 5000,
                 });
@@ -119,7 +121,6 @@ export class MainMenuScene extends SlideScene {
                     {
                         fontFamily: 'Instrument Serif',
                         fontSize: this.winX * 0.05,
-                        // fontSize: 40,
                         color: c,
                     })
             )
@@ -133,6 +134,7 @@ export class MainMenuScene extends SlideScene {
         //this.add.line((this.winX-titleWidth)/2, this.winY*0.3, 0, 0, titleWidth, 0, 0, 1)
         this.titleArr.forEach((char) => {
 
+            char.setShadow(1,1,1,1, true, true) 
             //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
             char.setX(lOffset + charPos) // div by 2 does something 
             charPos += char.displayWidth
