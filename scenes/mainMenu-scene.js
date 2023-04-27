@@ -146,7 +146,6 @@ export class MainMenuScene extends SlideScene {
             "shadowFill": false,
             */
             charPos += char.displayWidth
-            console.log(char.style)
             // char.setText(char.text + " ")
 
         })
