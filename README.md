@@ -19,8 +19,8 @@ This is a demo for my Computation Media - Game Development Experience course @ U
 
 All dog related assets stolen from my dogs Riki and Betty then mutilated by yours truly. 
 
-<img src="./assets/betty.jpeg">
-<img src="./assets/riki.jpeg">
+<img style="width:200px;" src="./assets/betty.jpeg">
+<img style="width:200px;" src="./assets/riki.jpeg">
 
 
 Hover sound effect asset made by me flicking a soda can tab and then editing the audio.
