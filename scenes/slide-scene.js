@@ -1,3 +1,4 @@
+//CREDIT: professor Adam Smith
 export class SlideScene extends Phaser.Scene {
     create() {
         this.input.keyboard.on('keydown-R', () => {

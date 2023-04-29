@@ -43,6 +43,9 @@ export class MainMenuScene extends SlideScene {
         let t = tt % 1; // calculate a value between 0 and 1 that represents the progress of the color transition
         let color1 = this.colors[this.colorIndex]; // current color
         let color2 = this.colors[(this.colorIndex + 1) % this.colors.length]; // next color
+
+        //https://en.wikipedia.org/wiki/Linear_interpolation
+        //lerping colors is a popular technique that I found in man places
         let r = Math.round(this.lerp(color1.r, color2.r, t)); // interpolate between the red components of the two colors
         let g = Math.round(this.lerp(color1.g, color2.g, t)); // interpolate between the green components of the two colors
         let b = Math.round(this.lerp(color1.b, color2.b, t)); // interpolate between the blue components of the two colors
@@ -68,7 +71,6 @@ export class MainMenuScene extends SlideScene {
                 align: 'center',
                 wordWrap: {
                     width: this.winX * .8,
-                    //    useAdvancedWrap: true
                 },
 
             }).setOrigin(0.5, 0.5).setInteractive();
@@ -84,9 +86,10 @@ export class MainMenuScene extends SlideScene {
     }
     makeRain() {
         this.hoverSE = this.sound.add('hoverSE')
+
+        //CREDIT: Professor Adam Smith
         this.time.addEvent({
             delay: 100, loop: true, callback: () => {
-                let obj = this.componentToHex(this.currColor.r) + this.componentToHex(this.currColor.g) + this.componentToHex(this.currColor.b);
                 let drop = this.add.circle(this.winX * Math.random(), this.winY * Math.random()).setStrokeStyle(5, this.comp, 0.3).setFillStyle(this.comp, 0)
                 this.tweens.add({
                     targets: drop,
@@ -218,22 +221,7 @@ export class MainMenuScene extends SlideScene {
         this.graphics = this.add.graphics();
 
         this.makeTitle()
-        this.time.addEvent({
-            delay: 1000, loop: true, callback: () => {
-                // this.graphics.lineStyle(5, 0, 1)
-                // this.tweens.add({
-                //     targets: drop,
-                //     radius: { from: 0, to: 200 },
-                //     duration: 6000,
-                //     onComplete: () => { drop.destroy() }
-                // });
-                // this.tweens.add({
-                //     targets: drop,
-                //     alpha: { from: 0.3, to: 0 },
-                //     duration: 5000,
-                // });
-            }
-        });
+       
         this.addInteractiveText(this.winX / 2, this.winY * 0.6, "PLAY")
         this.addInteractiveText(this.winX / 2, this.winY * 0.7, "SETTINGS")
         this.addInteractiveText(this.winX / 2, this.winY * 0.8, "CREDITS")
