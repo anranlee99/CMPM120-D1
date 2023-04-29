@@ -87,7 +87,7 @@ export class MainMenuScene extends SlideScene {
         this.time.addEvent({
             delay: 100, loop: true, callback: () => {
                 let obj = this.componentToHex(this.currColor.r) + this.componentToHex(this.currColor.g) + this.componentToHex(this.currColor.b);
-                let drop = this.add.circle(this.winX * 0.9 * Math.random() + this.winX * 0.1, this.winY * 0.9 * Math.random() + this.winY * 0.1).setStrokeStyle(5, this.comp, 0.3).setFillStyle(this.comp, 0)
+                let drop = this.add.circle(this.winX * Math.random(), this.winY * Math.random()).setStrokeStyle(5, this.comp, 0.3).setFillStyle(this.comp, 0)
                 this.tweens.add({
                     targets: drop,
                     radius: { from: 0, to: 200 },
@@ -105,7 +105,8 @@ export class MainMenuScene extends SlideScene {
     makeTitle() {
         let titleStr = "IT'S A DOGGY DOG WORLD OUT THERE".split('')
         this.titleArr = []
-        let titleWidth = 0
+        this.titleWidth = 0
+
         titleStr.forEach((char) => {
             //get a random color
             let c = '#'
@@ -120,15 +121,15 @@ export class MainMenuScene extends SlideScene {
                         fontFamily: 'Instrument Serif',
                         fontSize: this.winX * 0.05,
                         color: c,
-                    }).setStroke(0,5).setShadow(1,1, 0, 0, true)
+                    }).setStroke(0, 5).setShadow(1, 1, 0, 0, true)
             )
 
             //increment the length 
             let charlen = this.titleArr[this.titleArr.length - 1].displayWidth  //.width is the same thing
-            titleWidth += charlen
+            this.titleWidth += charlen
         })
         //credits -  https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi
-        let lOffset = (this.winX - titleWidth) / 2
+        let lOffset = (this.winX - this.titleWidth) / 2
         let charPos = 0;
         this.titleArr.forEach((char) => {
             char.setX(lOffset + charPos) // div by 2 does something 
@@ -147,17 +148,95 @@ export class MainMenuScene extends SlideScene {
             ]
 
         })
+
+        this.titleHeight = this.titleArr[0].displayHeight
+
+
+        this.titleBorderArr = []
+        let TLx = this.titleArr[0].x //- this.titleArr[0].displayWidth/2
+        let TLy = this.titleArr[0].y 
+
+        let BRx = this.titleArr[0].x + this.titleWidth + this.titleArr[0].displayWidth/2
+        let BRy = this.titleArr[this.titleArr.length-1].y + this.titleHeight
+        this.titleBorderArr = [
+            this.add.line(TLx, TLy, 0,0, 0, this.titleHeight).setStrokeStyle(1, 0, 1).setFillStyle(0, 1).setOrigin(0,0).setAlpha(0),
+            this.add.line(TLx, TLy, 0,0, this.titleWidth + this.titleArr[0].displayWidth/2 , 0).setStrokeStyle(1, 0, 1).setFillStyle(0, 1).setOrigin(0,0).setAlpha(0),
+            this.add.line(BRx, BRy, 0,0, 0, -this.titleHeight).setStrokeStyle(1, 0, 1).setFillStyle(0, 1).setOrigin(0,0).setAlpha(0),
+        this.add.line(BRx, BRy, 0,0, -this.titleWidth - this.titleArr[0].displayWidth/2, 0).setStrokeStyle(1, 0, 1).setFillStyle(0, 1).setOrigin(0,0).setAlpha(0)
+        ]
+
+        const timeline = this.add.timeline([
+            {
+                at: 1000,
+                tween: {
+                    targets: this.titleBorderArr[0],
+                    x:{from:0, to: this.titleBorderArr[0].x},
+                    alpha: 1,
+                    duration: 1000,
+                    ease: 'Bounce.easeOut'
+                }
+            },
+            {
+                at: 2000,
+                tween: {
+                    targets: this.titleBorderArr[1],
+                    y:{from:0, to: this.titleBorderArr[1].y},
+                    alpha: 1,
+                    duration: 1000,
+                    ease: 'Bounce.easeOut'
+                }
+            },
+            {
+                at: 3000,
+                tween: {
+                    targets: this.titleBorderArr[2],
+                    x:{from:this.winX, to: this.titleBorderArr[2].x},
+                    alpha: 1,
+                    duration: 1000,
+                    ease: 'Bounce.easeOut'
+                }
+            },
+            {
+                at: 4000,
+                tween: {
+                    targets: this.titleBorderArr[3],
+                    y:{from:this.winY, to: this.titleBorderArr[3].y},
+                    alpha: 1,
+                    duration: 1000,
+                    ease: 'Bounce.easeOut'
+                }
+            },
+            
+        ]); 
+        timeline.play();
     }
     create() {
         super.create()
         this.winX = this.game.config.width;
         this.winY = this.game.config.height;
 
-        this.makeTitle()
-        this.addInteractiveText(this.winX / 2, this.winY / 2, "PLAY")
-        this.addInteractiveText(this.winX / 2, this.winY * 0.6, "SETTINGS")
-        this.addInteractiveText(this.winX / 2, this.winY * 0.7, "CREDITS")
         this.graphics = this.add.graphics();
+
+        this.makeTitle()
+        this.time.addEvent({
+            delay: 1000, loop: true, callback: () => {
+                // this.graphics.lineStyle(5, 0, 1)
+                // this.tweens.add({
+                //     targets: drop,
+                //     radius: { from: 0, to: 200 },
+                //     duration: 6000,
+                //     onComplete: () => { drop.destroy() }
+                // });
+                // this.tweens.add({
+                //     targets: drop,
+                //     alpha: { from: 0.3, to: 0 },
+                //     duration: 5000,
+                // });
+            }
+        });
+        this.addInteractiveText(this.winX / 2, this.winY * 0.6, "PLAY")
+        this.addInteractiveText(this.winX / 2, this.winY * 0.7, "SETTINGS")
+        this.addInteractiveText(this.winX / 2, this.winY * 0.8, "CREDITS")
 
         this.makeRain()
 

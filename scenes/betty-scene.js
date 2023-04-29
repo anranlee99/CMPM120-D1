@@ -19,7 +19,7 @@ export class BettyScene extends SlideScene {
         const winY = this.game.config.height;
         //set the logo in the center 
         this.betty = this.add.image(winX / 2, winY * .3, 'betty_portrait').setScale(0.3);
-        this.betty_logo = this.add.image(winX / 2, winY * .6, 'betty_logo').setScale(0.2);
+        this.betty_logo = this.add.image(winX / 2, winY * .6, 'betty_logo').setScale(0.15);
         this.betty.setAlpha(0);
         this.betty_logo.setAlpha(0);
         
